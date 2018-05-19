@@ -1,16 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Test : MonoBehaviour {
+public class Test : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Start()
+    {
+        GameUtilEvents.OnSocialLoginSuccess += SocialLoginSuccess;
+        GameUtilEvents.OnDisplayAchievements += FacebookLoginSuccess;
+    }
+
+    private void FacebookLoginSuccess()
+    {
+        DebugText.instance.Print("facebook has logged in.");
+    }
+
+    private void SocialLoginSuccess()
+    {
+        DebugText.instance.Print(Social.localUser.userName + " has logged in.");
+    }
+
+    public void WinAGame()
+    {
+        GameUtilEvents.UpdateAchievement(GPGSIds.achievement_win_10_games, 1);
+    }
+
+    public void DisplayAchievements()
+    {
+        GameUtilEvents.DisplayAchievements();
+    }
 }
